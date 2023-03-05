@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { Canvas } from '@react-three/fiber';
+import { Group } from 'three';
+import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
+// import userObj from './0283.obj';
+import userObj1 from './0058.obj';
+import { useLoader } from '@react-three/fiber';
+import { Suspense } from "react";
 
-function App() {
+const UserModel = () => {
+    const obj = useLoader(OBJLoader, userObj1);
+    return (
+        <mesh position={[0, 0,0]}>
+            <primitive object={obj} scale={3.0}/>
+        </mesh>
+        
+    );
+    
+};
+
+export default function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Canvas>
+        <Suspense fallback={null}>
+          <UserModel />
+        </Suspense>
+      </Canvas>
     </div>
   );
 }
-
-export default App;
