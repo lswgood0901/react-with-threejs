@@ -25,7 +25,9 @@ export default function App() {
         <Suspense fallback={null}>
           <UserModel />
         </Suspense>
+        
       </Canvas>
+      hihihi
     </div>
   );
 }
