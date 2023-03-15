@@ -1,21 +1,44 @@
 import React from 'react';
+// import Main from './Main';
+import userObj1 from './objs/0086_0.obj';
 import { Canvas } from '@react-three/fiber';
 import { Group } from 'three';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
-// import userObj from './0283.obj';
-import userObj1 from './0058.obj';
 import { useLoader } from '@react-three/fiber';
 import { Suspense } from "react";
 
+
+let objBox = new Array();
+let filepaths = new Array();
+let loadedObjs = new Array();
+let fs = require.context("../src/objs", true, /^.*\.obj$/);
+filepaths = fs.keys();
+for (let i = 0; i < filepaths.length; i++) {
+    const objPath = require("../src/objs/" +
+        filepaths[i].split("/")[1].split(".")[0] +
+        ".obj");
+  objBox[filepaths[i].split("/")[1].split(".")[0] + ".obj"] = objPath;
+}
+let objKeys = Object.keys(objBox);
+
+console.log(filepaths, objBox)
+console.log(userObj1)
+
 const UserModel = () => {
-    const obj = useLoader(OBJLoader, userObj1);
-    return (
-        <mesh position={[0, 0,0]}>
-            <primitive object={obj} scale={3.0}/>
-        </mesh>
-        
-    );
-    
+  
+  const obj = useLoader(OBJLoader, objBox[objKeys[0]]);
+  console.log(obj)
+//   for (let value of objKeys) {
+//   loadedObjs.push(useLoader(OBJLoader, objBox[value]))
+// }
+  // const objList = loadedObjs.map((name)=>(<Main name={name}/>))
+  return (
+      <mesh position={[0, 0,0]}>
+          <primitive object = {obj} scale={3.0}/>
+      </mesh>
+      
+  );
+  
 };
 
 export default function App() {
